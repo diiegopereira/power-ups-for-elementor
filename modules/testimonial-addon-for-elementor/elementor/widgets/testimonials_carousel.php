@@ -1,5 +1,5 @@
 <?php
-namespace ElpugTeam\Widgets;
+namespace ElpugTestimonials\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @since 1.0.0
  */
-class ELPUG_Team_Carousel extends Widget_Base {
+class ELPUG_Testimonials_Carousel extends Widget_Base {
 
 	/**
 	 * Retrieve the widget name.
@@ -22,7 +22,7 @@ class ELPUG_Team_Carousel extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'team_carousel';
+		return 'testimonials_carousel';
 	}
 
 	/**
@@ -35,7 +35,7 @@ class ELPUG_Team_Carousel extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Team Members Carousel', 'elpug' );
+		return __( 'Testimonials Carousel', 'elpug' );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class ELPUG_Team_Carousel extends Widget_Base {
 	 * @return array Widget categories.
 	 */
 	public function get_categories() {
-		return [ 'elpug-elements' ];
+		return [ 'elpug-elements'];
 	}
 
 	/**
@@ -98,83 +98,66 @@ class ELPUG_Team_Carousel extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Team Carousel Settings', 'elpug' ),
+				'label' => __( 'Testimonials Carousel Settings', 'elpug' ),
 			]
 		);
 
 		$this->add_control(
-			'team_carousel',
+			'testimonials_carousel',
 			[
-				'label' => __( 'Team Members Carousel', 'elpug' ),
+				'label' => __( 'Testimonials Carousel', 'elpug' ),
 				'type' => Controls_Manager::REPEATER,				
 				'fields' => [
 					[
-						'name' => 'team_carousel_name',
-						'label' => __( 'Member Name', 'elpug' ),
+						'name' => 'testimonial_content',
+						'label' => __( 'Content/Text', 'elpug' ),
+						'type' => Controls_Manager::TEXTAREA,												
+					],
+					[
+						'name' => 'testimonial_name',
+						'label' => __( 'Name', 'elpug' ),
 						'type' => Controls_Manager::TEXT,
 						'default'     => __( 'Type the Name Here', 'elpug' ),						
 					],
 					[
-						'name' => 'team_carousel_position',
-						'label' => __( 'Position (optional, leave blank to hide)', 'elpug' ),
+						'name' => 'testimonial_subtitle',
+						'label' => __( 'Subtitle (Optional, Will be show below the name)', 'elpug' ),
 						'type' => Controls_Manager::TEXT,												
 					],
+					
 					[
-						'name' => 'team_carousel_description',
-						'label' => __( 'Description (optional, leave blank to hide)', 'elpug' ),
-						'type' => Controls_Manager::TEXTAREA,												
-					],
-					[
-						'name' => 'team_carousel_image',
+						'name' => 'testimonial_image',
 						'label' => __( 'Image', 'elpug' ),
 						'type' => Controls_Manager::MEDIA,											
-					],
-					/*[
-						'name' => 'team_carousel_social',
-						'label' => __( 'Links / Social Media', 'elpug' ),
-						'type' => Controls_Manager::REPEATER,	
-						'fields' => [
-							[
-								'name' => 'team_carousel_list_icon',
-								'label' => __( 'Icon', 'elpug' ),
-								'type' => Controls_Manager::ICON,
-								'include' => [
-						            'fa fa-facebook',
-						            'fa fa-flickr',
-						            'fa fa-google-plus',
-						            'fa fa-instagram',
-						            'fa fa-linkedin',
-						            'fa fa-pinterest',
-						            'fa fa-reddit',
-						            'fa fa-twitch',
-						            'fa fa-twitter',
-						            'fa fa-vimeo',
-						            'fa fa-youtube',
-						            'fa fa-link',
-						        ],
-							],
-							[
-								'name' => 'team_carousel_list_url',
-								'label' => __( 'URL', 'elpug' ),
-								'type' => Controls_Manager::URL,
-								'show_external' => true, // Show the 'open in new tab' button.
-							],										
-						],
-					],*/
+					],					
 				],
 			]
 		);
 
 		$this->add_control(
-		  'team_carousel_style',
+		  'testimonial_image_style',
+		  [
+		     'label'       => __( 'Image Style', 'elpug' ),
+		     'type' => Controls_Manager::SELECT,
+		     'default' => 'elpug-img-style1',
+		     'options' => [
+		     	'elpug-img-style1'  => __( 'Original', 'elpug' ),
+		     	'elpug-img-style2' => __( 'Rounded', 'elpug' ),
+		     	'elpug-img-style3' => __( 'Boxed', 'elpug' ),
+		     ],
+		  ]
+		);
+
+		$this->add_control(
+		  'testimonials_style',
 		  [
 		     'label'       => __( 'Element Style', 'elpug' ),
 		     'type' => Controls_Manager::SELECT,
-		     'default' => 'elpug-team-style1',
+		     'default' => 'elpug-testimonial-style1',
 		     'options' => [
-		     	'elpug-team-style1'  => __( 'Classic', 'elpug' ),
-		     	'elpug-team-style3' => __( 'Rounded', 'elpug' ),
-		     	'elpug-team-style2' => __( 'Show Content on Hover', 'elpug' ),
+		     	'elpug-testimonial-style1'  => __( 'Classic / Clean', 'elpug' ),
+		     	'elpug-testimonial-style2' => __( 'Card', 'elpug' ),
+		     	'elpug-testimonial-style3' => __( 'Balloon', 'elpug' ),
 		     ],
 		  ]
 		);
@@ -194,48 +177,62 @@ class ELPUG_Team_Carousel extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings();		
 
-		$style = $settings['team_carousel_style'];
+		$style = $settings['testimonials_style'];
 
-		$carousellist = $this->get_settings( 'team_carousel' );
+		$carousellist = $this->get_settings( 'testimonials_carousel' );
 
 		?>
 
 		<?php if ( $carousellist ) { ?>
 
-		<div class="elpug-team-carousel-wrapper">
+		<div class="elpug-testimonials-carousel-wrapper">
 
-			<div class="owl-carousel elpug-team-carousel owl-theme">
+			<div class="owl-carousel elpug-testimonials-carousel owl-theme">
 
 
 			<?php foreach ( $carousellist as $carouselitem) { ?>
 
 			<?php 
 				
-				$image = $carouselitem['team_carousel_image'];
+				$image = $carouselitem['testimonial_image'];
 
-				//$sociallist = $carouselitem['team_carousel_social'];
+				//$sociallist = $carouselitem['testimonials_carousel_social'];
 			
 			?>
-					
 
-					<div class="elpug-team-item-wrapper">
+					<div class="elpug-testimonial-item-wrapper <?php echo esc_attr($settings['testimonials_style']); ?>">
 
-						<figure class="elpug-team-item <?php echo esc_attr($style); ?>">
-							<div class="elpug-team-image" style="background-image: url(<?php echo esc_url($image['url']); ?>);">
+						<div class="elpug-testimonial-item ">
+							
+							
+							<!-- Content -->
+							<div class="elpug-testimonial-content">
+								<?php echo wp_kses_post($carouselitem['testimonial_content']); ?>
+							</div>
+							<!-- /Content -->	
+
+							<!-- Image -->
+							<?php if (!empty($image)) { ?>
+							<div class="elpug-testimonial-image <?php echo esc_attr($settings['testimonial_image_style']); ?>" style="background-image: url(<?php echo esc_url($image['url']); ?>);">
 								<img src="<?php echo esc_url($image['url']); ?>">
 							</div>
-							
-							<figcaption>
-								<div class="elpug-team-caption">
-									<h4 class="elpug-team-item-heading"><?php echo esc_html($carouselitem['team_carousel_name']); ?></h4>
-									<div class="elpug-team-item-position"><?php echo esc_html($carouselitem['team_carousel_position']); ?></div>
-									<div class="elpug-team-item-description"><?php echo esc_html($carouselitem['team_carousel_description']); ?></div>
-									
+							<?php } ?>
+							<!-- /Image -->			
+
+							<!-- Footer -->
+							<div class="elpug-testimonial-footer">
+								<div class="elpug-testimonial-name">
+									<?php echo wp_kses_post($carouselitem['testimonial_name']); ?>
 								</div>
-							</figcaption>			
-						</figure>
-					</div>
-				
+								<div class="elpug-testimonial-subtitle">
+									<?php echo wp_kses_post($carouselitem['testimonial_subtitle']); ?>
+								</div>
+							</div>
+							<!-- /Footer -->
+									
+						</div>
+					</div>	
+
 			<?php } ?>
 
 			</div>

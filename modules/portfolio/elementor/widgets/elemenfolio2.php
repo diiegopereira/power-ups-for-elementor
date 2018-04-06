@@ -127,7 +127,7 @@ class ELPT_Elemenfolio extends Widget_Base {
 			]
 		);
 
-		/*$this->add_control(
+		$this->add_control(
 			'type',
 			[
 				'label' => __( 'Display specific portfolio category', 'elpug' ),
@@ -137,7 +137,7 @@ class ELPT_Elemenfolio extends Widget_Base {
 				'label_off' => __( 'Off', 'elpug' ),
 				'return_value' => 'yes',
 			]
-		);*/
+		);
 
 		/*$portfolio_taxonomies = get_terms( array('taxonomy' => 'elemenfoliocategory', 'fields' => 'id=>name', 'hide_empty' => false, ) );
 
@@ -244,12 +244,39 @@ class ELPT_Elemenfolio extends Widget_Base {
 	 */
 	protected function render() {
 		$settings = $this->get_settings();
-		?>			
-
-		<?php echo do_shortcode('[elemenfolio postsperpage="'.$settings['postsperpage'] .'" showfilter="'.$settings['showfilter'].'" style="'.$settings['style'].'" margin="'.$settings['margin'].'" columns="'.$settings['columns'].'" linkto="'.$settings['linkto'].'"]'); ?>
+		?>
 		
-		<?php //echo do_shortcode('[elemenfolio postsperpage="'.$settings['postsperpage'].'" type="'.$settings['type'].'" taxonomy="'.$settings['taxonomy'].'" showfilter="'.$settings['showfilter'].'" style="'.$settings['style'].'" margin="'.$settings['margin'].'" columns="'.$settings['columns'].'" linkto="'.$settings['linkto'].'"]'); ?>
+		<?php
+			//Query Args 
+			$args = array(
+				'post_type' => 'elemenfolio',
+				'posts_per_page' => $postsperpage,	
+			);
 
+			$portfolioposts = get_posts($args);
+	
+			if(count($portfolioposts)){ 
+				global $post; ?>
+
+				<div class="elpt-portfolio">
+
+					<?php foreach($portfolioposts as $post){ ?>
+
+						<?php the_title(); ?><br/>
+
+					<?php } ?>
+					
+				</div>
+
+				<?php wp_reset_postdata(); ?>
+
+			<?php } 
+
+
+		?>
+
+		<?php echo do_shortcode('[elemenfolio postsperpage="'.$settings['postsperpage'].'" type="'.$settings['type'].'" taxonomy="'.$settings['taxonomy'].'" showfilter="'.$settings['showfilter'].'" style="'.$settings['style'].'" margin="'.$settings['margin'].'" columns="'.$settings['columns'].'" linkto="'.$settings['linkto'].'"]'); ?>
+		
 		<?php wp_reset_postdata(); ?>
 		
 

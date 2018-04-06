@@ -5,7 +5,7 @@
  *
  */
 /*-----------------------------------------------------------------------------------*/
-/*	Team Member Shortcode
+/*	Testimonial Item Shortcode
 /*-----------------------------------------------------------------------------------*/
 function elpug_team_member($atts, $content = null) {
 	extract(shortcode_atts(array(
@@ -53,7 +53,7 @@ add_shortcode("pug-team-member", "elpug_team_member");
 
 
 /*-----------------------------------------------------------------------------------*/
-/*	Team Carousel Shortcode
+/*	Testimonial Carousel Shortcode
 /*-----------------------------------------------------------------------------------*/
 function elpug_team_carousel($atts, $content = null) {
 	extract(shortcode_atts(array(

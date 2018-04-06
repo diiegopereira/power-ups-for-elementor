@@ -9,82 +9,142 @@ if ( ! defined( 'ABSPATH' ) ) {
 /*
    Panel
 */
-add_action('admin_menu', 'elpt_setup_menu');
+//Register Settings
+function elpug_register_settings(){
+	$option_group = 'elpug_powerups';
+    register_setting( $option_group, 'elpug_portfolio_switch', $args = array( 'default'      => 1, ) );
+	register_setting( $option_group, 'elpug_slider_switch', $args = array( 'default'      => 1, ) );
+	register_setting( $option_group, 'elpug_blogroll_switch', $args = array( 'default'      => 1, ) );
+	register_setting( $option_group, 'elpug_team_switch', $args = array( 'default'      => 1, ) );
+	register_setting( $option_group, 'elpug_testimonials_switch', $args = array( 'default'      => 1, ) );
+}
+elpug_register_settings();
+
+
+add_action('admin_menu', 'elpug_setup_menu');
  
-function elpt_setup_menu(){
+function elpug_setup_menu(){
 
 	//Enqueue color picker
 	wp_enqueue_style( 'wp-color-picker' );
 	//wp_enqueue_script( 'elemenfolio-js', get_template_directory_uri().'/myscript.js', array( 'wp-color-picker','jquery' ), false, true );
 	wp_enqueue_script( 'elemenfolio-js', plugin_dir_url( __FILE__ ) .  'js/elemenfolio-admin.js', array( 'wp-color-picker' ), '20151218', true );
+	wp_enqueue_style( 'elpug-admin-css', plugin_dir_url( __FILE__ ) . 'css/elpug_admin.css' );
 
 	//Create Admin Page
- 	$page_title = 'Elementor Portfolio';
-    $menu_title = 'Elementor Portfolio';
+ 	$page_title = 'Power-Ups for Elementor';
+    $menu_title = 'Power-Ups for Elementor';
     $capability = 'edit_posts';
-    $menu_slug = 'elementor_portfolio';
-    $function = 'elpt_options_page';
+    $menu_slug = 'powerups_for_elementor';
+    $function = 'elpug_powerups_options_page';
     $icon_url = 'dashicons-layout';
     $position = 99;
 
     add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $position );
 
     //Create Settings
-    $option_group = 'elpt';
-
-	register_setting( $option_group, 'elpt_color' );
+    $option_group = 'elpug_powerups';
 
 	// Color Section
-	$settings_section = 'elpt_main';
-	$page = 'elpt';
-	add_settings_section( $settings_section, __( 'Settings', 'elpt' ), '', $page );
-	add_settings_field( 'elpt_color', __('Color Scheme', 'elpt'), 'elpt_color_callback', $page, 'elpt_main' );
+	$settings_section = 'elpug_main';
+	$page = 'elpug_powerups';
+	add_settings_section( $settings_section, __( 'Enable/Disable Modules', 'elpug_powerups' ), 'elpug_settings_modules_callback', $page );
+	add_settings_field( 'elpug_portfolio_switch', __('Portolio Module', 'elpug_powerups'), 'elpug_portfolio_switch_callback', $page, 'elpug_main' );
+	add_settings_field( 'elpug_slider_switch', __('Slider Module', 'elpug_powerups'), 'elpug_slider_switch_callback', $page, 'elpug_main' );
+	add_settings_field( 'elpug_blogroll_switch', __('Post Carousel Module', 'elpug_powerups'), 'elpug_blogroll_switch_callback', $page, 'elpug_main' );
+	add_settings_field( 'elpug_team_switch', __('Team Module', 'elpug_powerups'), 'elpug_team_switch_callback', $page, 'elpug_main' );
+	add_settings_field( 'elpug_testimonials_switch', __('Testimonials Module', 'elpug_powerups'), 'elpug_testimonials_switch_callback', $page, 'elpug_main' );
 
 	//Shortcode Section
-	//add_settings_section( 'elpt_howto', __( 'How to display the portfolio grid', 'elpt' ), 'elpt_shortcode_callback', $page );
+	//add_settings_section( 'elpug_howto', __( 'How to display the portfolio grid', 'elpug_powerups' ), 'elpug_shortcode_callback', $page );
 }
 
-//Fields Callback
-function elpt_color_callback(){
-	echo '<input type="text" name="elpt_color" class="color-picker" value="' .get_option("elpt_color") .'"> Select the main color of your website <br>';
+// ================================ Fields Callback ===============================
+//Section Callback 
+function elpug_settings_modules_callback(){
+
+	echo esc_html('In this section you can disable modules that you are not using or that you do not need to improve the performance of your website.', 'elpug');
+
 }	
 
-//Texts
-function elpt_shortcode_callback() {
+//Portfolio
+function elpug_portfolio_switch_callback(){
+	?>
+	<label class="elpug-admin-switch">
+		<input type="checkbox" name="elpug_portfolio_switch" value="1"  <?php checked(1, get_option('elpug_portfolio_switch'), true); ?> >
+		<span class="elpug-admin-slider round"></span>
+	</label>
 	
+	<?php
+}	
+
+//Slider
+function elpug_slider_switch_callback(){
+	
+	?>
+
+	<label class="elpug-admin-switch">
+		<input type="checkbox" name="elpug_slider_switch" value="1"  <?php checked(1, get_option('elpug_slider_switch'), true); ?> >
+		<span class="elpug-admin-slider round"></span>
+	</label>
+	
+	<?php
+}	
+
+//Blogroll
+function elpug_blogroll_switch_callback(){
+	
+	?>
+
+	<label class="elpug-admin-switch">
+		<input type="checkbox" name="elpug_blogroll_switch" value="1"  <?php checked(1, get_option('elpug_blogroll_switch'), true); ?> >
+		<span class="elpug-admin-slider round"></span>
+	</label>
+	
+	<?php
+}
+
+//Team
+function elpug_team_switch_callback(){
+	
+	?>
+
+	<label class="elpug-admin-switch">
+		<input type="checkbox" name="elpug_team_switch" value="1"  <?php checked(1, get_option('elpug_team_switch'), true); ?> >
+		<span class="elpug-admin-slider round"></span>
+	</label>
+	
+	<?php
+}
+
+//Testimonials
+function elpug_testimonials_switch_callback(){
+	
+	?>
+
+	<label class="elpug-admin-switch">
+		<input type="checkbox" name="elpug_testimonials_switch" value="1"  <?php checked(1, get_option('elpug_testimonials_switch'), true); ?> >
+		<span class="elpug-admin-slider round"></span>
+	</label>
+	
+	<?php
 }
 
 
-//Page
-function elpt_options_page() {
+
+//==================================== Page ====================================
+function elpug_powerups_options_page() {
 ?>
 	<div class="wrap">
-		<h1><?php esc_html_e( 'Elementor Portfolio- Settings', 'elemenfolio' ) ?></h1>
+		<h1><?php esc_html_e( 'Power-Ups for Elementor Portfolio- Settings', 'elpug' ) ?></h1>
 		<form action="options.php" method="post">
-			<?php settings_fields( 'elpt' ); ?>
-			<?php do_settings_sections( 'elpt' ); ?>
-			<input name="Submit" type="submit" value="<?php esc_attr_e( 'Save Changes', 'elemenfolio' ); ?>" class="button button-primary" />
+			<hr/><br/>		
+			<?php do_settings_sections( 'elpug_powerups' ); ?>
+			<?php settings_fields( 'elpug_powerups' ); ?>
+			<input name="Submit" type="submit" value="<?php esc_attr_e( 'Save Changes', 'elpug' ); ?>" class="button button-primary" />
 			<br/><br/><br/><hr/><br/>
-			<h2><?php esc_html_e( 'How to display the Portfolio Grid', 'elemenfolio' ); ?></h2>
-			<div ><p><strong><?php esc_html_e( 'The widget will be available in Elementor items. Just drag it to your website and select the customization options :)', 'elemenfolio' ); ?></strong></p></div>
-			<h2><?php esc_html_e( 'Display using a shortcode', 'elemenfolio' ); ?></h2>
-			<p><?php esc_html_e( 'You can also display the portfolio grid on a page/post using the [elemenfolio] shortcode.', 'elemenfolio' ); ?></p>
-			<code>[elemenfolio]</code>
-			<p><?php esc_html_e( 'You can customize it using these options:', 'elemenfolio' ); ?></p>
-				<ul>
-					<li><strong><?php esc_html_e('postsperpage'); ?></strong>: <?php esc_html_e( 'Set a number of posts to show', 'elemenfolio' ); ?> <i>(eg: postsperpage="12").</i></li>
-					<li><strong><?php esc_html_e('type' ); ?></strong>: <?php esc_html_e( 'Set it to yes if you want to show a specific portfolio category. Options: ', 'elemenfolio' ); ?>  <i>yes/no. (eg: type="yes")</i>.</li>
-					<li><strong><?php esc_html_e('taxonomy'); ?></strong>: <?php esc_html_e( 'Set the specific taxonomy slug. You need to set type="yes" to use this feature.', 'elemenfolio' ); ?>  <i>(eg: taxonomy="print")</i>.</li>
-					<li><strong><?php esc_html_e('showfilter' ); ?></strong>: <?php esc_html_e( 'Show the category filter on the top of the grid. Options: ', 'elemenfolio' ); ?>  <i> yes/no. (eg: showfilter="yes")</i>.</li>
-					<li><strong><?php esc_html_e('style'); ?></strong>: <?php esc_html_e( 'Set the grid style of the portfolio. Options: ', 'elemenfolio' ); ?>  <i> masonry/box. (eg: style="box")</i>.</li>
-					<li><strong><?php esc_html_e('linkto'); ?></strong>: <?php esc_html_e( 'Set the link type of the portfolio item. If is set to image, it will open the Featured Image on a lightbox. Options: ', 'elemenfolio' ); ?>  <i> image/project. (eg: linkto="image")</i>.</li>
-					<li><strong><?php esc_html_e('columns'); ?></strong>: <?php esc_html_e( 'Set the columns per row of the portfolio grid.  Options: ', 'elemenfolio' ); ?>  <i> 2/3/4. (eg: columns="4")</i>.</li>
-					<li><strong><?php esc_html_e('margin'); ?></strong>: <?php esc_html_e( 'Choose if you want a margin between the items or no.  Options: ', 'elemenfolio' ); ?>  <i> yes/no. (eg: margin="no")</i>.</li>
-				</ul>
-			<h3><?php esc_html_e( 'Example of a complete shortcode:', 'elemenfolio' ); ?></h3>
-			<code>[elemenfolio postsperpage="12" type="no" showfilter="yes" style="masonry" linkto="image" columns="4" margin="no"]</code>		
-			<h3><?php esc_html_e( 'Example of a complete shortcode without the set properties:', 'elemenfolio' ); ?></h3>
-			<code>[elemenfolio postsperpage="" type="" taxonomy="" showfilter="" style="" linkto="" columns="" margin=""]</code>				
+			<h2><?php esc_html_e( 'How to use the Power-Up Elements', 'elpug' ); ?></h2>
+			<div ><p><strong><?php esc_html_e( 'The widgets will be available in Elementor editor page, on the "Power-Ups for Elementor" category. Just drag it to your page and select the customization options :)', 'elpug' ); ?></strong></p></div>			
 		</form>
 	</div>
 	<div>

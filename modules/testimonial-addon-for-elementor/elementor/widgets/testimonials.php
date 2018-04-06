@@ -1,5 +1,5 @@
 <?php
-namespace ElpugTeam\Widgets;
+namespace ElpugTestimonials\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @since 1.0.0
  */
-class ELPUG_Team extends Widget_Base {
+class ELPUG_Testimonials extends Widget_Base {
 
 	/**
 	 * Retrieve the widget name.
@@ -22,7 +22,7 @@ class ELPUG_Team extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'team_member';
+		return 'testimonial_item';
 	}
 
 	/**
@@ -35,7 +35,7 @@ class ELPUG_Team extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return __( 'Team Member', 'elpug' );
+		return __( 'Testimonial Item', 'elpug' );
 	}
 
 	/**
@@ -98,12 +98,22 @@ class ELPUG_Team extends Widget_Base {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Team Member Settings', 'elpug' ),
+				'label' => __( 'Testimonial Item Settings', 'elpug' ),
 			]
 		);
 
 		$this->add_control(
-		  'team_name',
+		  'testimonial_content',
+		  [
+		     'label'   => __( 'Content/Text', 'elpug' ),
+		     'type'    => Controls_Manager::TEXTAREA,
+		     //'default'     => __( 'Type the Name Here', 'elpug' ),
+     		 //'placeholder' => __( 'Type your title text here', 'elpug' ),
+		  ]
+		);
+
+		$this->add_control(
+		  'testimonial_name',
 		  [
 		     'label'   => __( 'Name', 'elpug' ),
 		     'type'    => Controls_Manager::TEXT,
@@ -113,27 +123,18 @@ class ELPUG_Team extends Widget_Base {
 		);
 
 		$this->add_control(
-		  'team_position',
+		  'testimonial_subtitle',
 		  [
-		     'label'   => __( 'Position (optional, leave blank to hide)', 'elpug' ),
+		     'label'   => __( 'Subtitle (Optional, Will be show below the name)', 'elpug' ),
 		     'type'    => Controls_Manager::TEXT,
-		     //'default'     => __( '', 'elpug' ),
-     		 'placeholder' => __( 'Type the position here (eg: CEO)', 'elpug' ),
-		  ]
-		);
-
-		$this->add_control(
-		  'team_description',
-		  [
-		     'label'   => __( 'Description (optional, leave blank to hide)', 'elpug' ),
-		     'type'    => Controls_Manager::TEXTAREA,
 		     //'default'     => __( 'Type the Name Here', 'elpug' ),
      		 //'placeholder' => __( 'Type your title text here', 'elpug' ),
 		  ]
-		);
+		);	
 
+		
 		$this->add_control(
-		  'team_image',
+		  'testimonial_image',
 		  [
 		     'label'   => __( 'Image', 'elpug' ),
 		     'type' => Controls_Manager::MEDIA,
@@ -143,51 +144,29 @@ class ELPUG_Team extends Widget_Base {
 		);
 
 		$this->add_control(
-			'team_social',
-			[
-				'label' => __( 'Links / Social Media', 'elpug' ),
-				'type' => Controls_Manager::REPEATER,				
-				'fields' => [
-					[
-						'name' => 'team_list_icon',
-						'label' => __( 'Icon', 'elpug' ),
-						'type' => Controls_Manager::ICON,
-						'include' => [
-				            'fa fa-facebook',
-				            'fa fa-flickr',
-				            'fa fa-google-plus',
-				            'fa fa-instagram',
-				            'fa fa-linkedin',
-				            'fa fa-pinterest',
-				            'fa fa-reddit',
-				            'fa fa-twitch',
-				            'fa fa-twitter',
-				            'fa fa-vimeo',
-				            'fa fa-youtube',
-				            'fa fa-link',
-				        ],
-					],
-					[
-						'name' => 'team_list_url',
-						'label' => __( 'URL', 'elpug' ),
-						'type' => Controls_Manager::URL,
-						'show_external' => true, // Show the 'open in new tab' button.
-					],
-				],
-				//'title_field' => '{{{ team_list_url }}}',
-			]
+		  'testimonial_image_style',
+		  [
+		     'label'       => __( 'Image Style', 'elpug' ),
+		     'type' => Controls_Manager::SELECT,
+		     'default' => 'elpug-img-style1',
+		     'options' => [
+		     	'elpug-img-style1'  => __( 'Original', 'elpug' ),
+		     	'elpug-img-style2' => __( 'Rounded', 'elpug' ),
+		     	'elpug-img-style3' => __( 'Boxed', 'elpug' ),
+		     ],
+		  ]
 		);
 
 		$this->add_control(
-		  'team_style',
+		  'testimonial_style',
 		  [
 		     'label'       => __( 'Element Style', 'elpug' ),
 		     'type' => Controls_Manager::SELECT,
-		     'default' => 'elpug-team-style1',
+		     'default' => 'elpug-testimonial-style1',
 		     'options' => [
-		     	'elpug-team-style1'  => __( 'Classic', 'elpug' ),
-		     	'elpug-team-style3' => __( 'Rounded', 'elpug' ),
-		     	'elpug-team-style2' => __( 'Show Content on Hover', 'elpug' ),
+		     	'elpug-testimonial-style1'  => __( 'Classic / Clean', 'elpug' ),
+		     	'elpug-testimonial-style2' => __( 'Card', 'elpug' ),
+		     	'elpug-testimonial-style3' => __( 'Balloon', 'elpug' ),
 		     ],
 		  ]
 		);
@@ -207,36 +186,41 @@ class ELPUG_Team extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings();
 
-		$image = $this->get_settings( 'team_image' );
+		$image = $this->get_settings( 'testimonial_image' );
 
-		$sociallist = $this->get_settings( 'team_social' );
 		?>
 
-		<div class="elpug-team-item-wrapper">
+		<div class="elpug-testimonial-item-wrapper <?php echo esc_attr($settings['testimonial_style']); ?>">
 
-			<figure class="elpug-team-item <?php echo esc_attr($settings['team_style']); ?>">
-				<div class="elpug-team-image" style="background-image: url(<?php echo esc_url($image['url']); ?>);">
+			<div class="elpug-testimonial-item ">
+				
+				
+				<!-- Content -->
+				<div class="elpug-testimonial-content">
+					<?php echo wp_kses_post($settings['testimonial_content']); ?>
+				</div>
+				<!-- /Content -->	
+
+				<!-- Image -->
+				<?php if (!empty($image)) { ?>
+				<div class="elpug-testimonial-image <?php echo esc_attr($settings['testimonial_image_style']); ?>" style="background-image: url(<?php echo esc_url($image['url']); ?>);">
 					<img src="<?php echo esc_url($image['url']); ?>">
 				</div>
-				
-				<figcaption>
-					<div class="elpug-team-caption">
-						<h4 class="elpug-team-item-heading"><?php echo esc_html($settings['team_name']); ?></h4>
-						<div class="elpug-team-item-position"><?php echo esc_html($settings['team_position']); ?></div>
-						<div class="elpug-team-item-description"><?php echo esc_html($settings['team_description']); ?></div>
-						<?php if ( $sociallist ) { ?>
-						<div class="elpug-team-item-links">
-							<ul class="elpug-team-item-links">
-								<?php foreach ( $sociallist as $item ) { ?>
-									<?php $itemlink = $item['team_list_url']; ?>
-									<li><a href="<?php echo esc_url($itemlink['url']); ?>"><i class="<?php echo esc_attr($item['team_list_icon']); ?>"></i></a></li>
-								<?php } ?>
-							</ul>
-						</div>
-						<?php } ?>
+				<?php } ?>
+				<!-- /Image -->			
+
+				<!-- Footer -->
+				<div class="elpug-testimonial-footer">
+					<div class="elpug-testimonial-name">
+						<?php echo wp_kses_post($settings['testimonial_name']); ?>
 					</div>
-				</figcaption>			
-			</figure>
+					<div class="elpug-testimonial-subtitle">
+						<?php echo wp_kses_post($settings['testimonial_subtitle']); ?>
+					</div>
+				</div>
+				<!-- /Footer -->
+						
+			</div>
 		</div>
 
 		<?php

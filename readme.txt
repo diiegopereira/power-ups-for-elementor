@@ -1,45 +1,59 @@
 === Power Ups for Elementor ===
 Contributors: wppug, dotrex
 Donate link: 
-Tags: portfolio, filterable portfolio, portfolio gallery, responsive portfolio, gallery
+Tags: portfolio, filterable portfolio, responsive, portfolio, gallery, testimonials, slider, elementor 
 Requires at least: 4.0
 Tested up to: 4.9
 Stable tag: 1.0.1
 License: GPLv2
 
-= UNDER DEVELOPMENT =
+Add new addons, widgets and features for Elementor page builder, like Slider, Team, Testimonials, Post Carousel and Portfolio. 
 
-This plugin extend Elementor by adding the Portfolio functionality for free!
+Give a Power-Up to the Elementor Page Builder and take it to the next level!
 
-= Plugin Demo  =
-[Click here to see the plugin demo](https://wppug.com/creative-portfolio-plugin-demo/)
 
+= More Infos and Plugin Demo  =
+**Plugin Demo**
+[Click here to see the plugin demo](https://wppug.com/elementor-demos/power-ups-for-elementor/)
+
+= Request Features and Give Feedback =
+You can request new features or give us a feedback! Just send a e-mail to wppugs@gmail.com
 
 = Overview =
+The best free addons for Elementor! This plugin extend the Elementor Page Builder by adding new/premium features for free. It will add new elements to the elementor widget list that you can use to build your websites. All elements are easy to customize and have a premium design. 
 
-This plugin xtend Elementor by adding the Portfolio functionality for free! It allows you to create a creative portfolio to show your projects using the Drag&Drop interface of Elementor. 
+It also adds portfolio functionality. It's very useful to create a portfolio of websites or web development projects and it is specially made for creative professionals such as designers, web developers and photographers. You can also enable the filterable portfolio option, separating your projects into categories that can be filtered.
 
-It's very useful to create a portfolio of websites or web development projects and it is specially made for creative professionals such as designers, web developers and photographers. 
+All features can be activated or deactivated through the settings panel. This allows you to increase the performance of your website by turning off features that you are not using.
 
-You can also enable the filterable portfolio option, separating your projects into categories that can be filtered.
+We are constantly improving the plugin and adding new features. If you have a suggestion or feedback please send an email to wppugs@gmail.com
 
+= General Features =
+* Slider Elementor Module - Create awesome sliders to welcome your visitors or feature some content
+* Post Carousel Elementor Module - Display your blog posts and impress your audience with this awesome carousel
+* Team Elementor Module - Display the members of your team with our Team Widget or the Team Carousel Widget 
+* Testimonials Elementor Module - Display testimonials using our Testimonial Widget or the Testimonial Carousel Widget
+* Portfolio Elementor Module - Showcase your work to your audience with a premium portfolio grid
 
-
-= Features =
+= Portfolio Features =
 * Filterable Portfolio
 * You can display only a Custom Portfolio Category if you want
-* You can show the projects on a modal or on a single page
-* Compatible with Elementor and King Composer Page Builders
+* You can show the projects on a modal or on a single page (with the project details)
 * Masonry/Boxed Grid
 * 2,3 or 4 collumns
 
+**Portfolio Module Demo**
+[Click here to see the portfolio module demo](https://wppug.com/elementor-demos/portfolio-for-elementor/)
 
 = Installation Instructions =
-1. Upload `elementor-portfolio` folder to the `/wp-content/plugins/` directory
+1. Upload `power-ups-for-elementor` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Click on the "Portfolio" link from the main menu
-4. Click on "Add New Item", create your first portfolio content and publish. Create as many posts you want.
-5. Click on "Creative Portfolio" to set your color scheme.
+3. Click on "Power Ups to Elementor" to set your settings. 
+
+= Portfolio Instructions =
+1. Click on the "Portfolio" link from the main menu
+2. Click on "Add New Item", create your first portfolio content and publish. Create as many posts you want.
+3. Add the Portfolio Grid widget on a page using Elementor 
 
 = How to display the filterable portfolio grid =
 
@@ -52,8 +66,6 @@ You can also use dthe shortcode to display the portfolio grid on a page/post:
 You can customize it using these options:
 
 * **postsperpage:** Set a number of posts to show (eg: postsperpage="12").
-* **type** Set it to yes if you want to show a specific portfolio category. Options: yes/no. (eg: type="yes").
-* **taxonomy**: Set the specific taxonomy slug. You need to set type="yes" to use this feature. (eg: taxonomy="print").
 * **showfilter**: Show the category filter on the top of the grid. Options: yes/no. (eg: showfilter="yes").
 * **style**: Set the grid style of the portfolio. Options: masonry/box. (eg: style="box").
 * **linkto**: Set the link type of the portfolio item. If is set to image, it will open the Featured Image on a lightbox. Options: image/project. (eg: linkto="image").
@@ -65,9 +77,17 @@ You can customize it using these options:
 [elemenfolio postsperpage="12" type="no" showfilter="yes" style="masonry" linkto="image" columns="4" margin="no"]
 
 **Example of a complete shortcode without the set properties:**
-[elemenfolio postsperpage="" type="" taxonomy="" showfilter="" style="" linkto="" columns="" margin=""]
+[elemenfolio postsperpage=""  showfilter="" style="" linkto="" columns="" margin=""]
+
+== Screenshots ==
+
+1. **Testimonials Elementor Widget.** Display testimonials using our Testimonial Widget or the Testimonial Carousel Widget.
+2. **Drag & Drop our Elements.** Just Drag and Drop our widget to your Elementor page and set the customization options.
+3. **Posts Carousel Elementor Widget.** Display your blog posts and impress your audience with this awesome carousel.
+4. **Team Elementor Widget.** Display the members of your team with our Team Widget or the Team Carousel Widget.
+5. **Portfolio Elementor Widget.** Showcase your work to your audience with a premium portfolio grid.
 
 
 == Changelog ==
-1.0.1 - Initial Release
+1.0.5 - Initial Release on WordPress.org
 
